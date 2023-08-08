@@ -1,0 +1,33 @@
+version: "0.1"
+
+services:
+  web:
+    container_name: web
+    image: jointakahe/takahe
+    env_file: .env
+    depends_on:
+      - db
+    ports:
+      - 8000:8001
+    volumes:
+      - ./static/css/mes.css:/takahe/static/css/mes.css
+  worker:
+    container_name: stator
+    image: jointakahe/takahe
+    command: python3 manage.py runstator
+    env_file: .env
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:14
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${PGNAME}
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+volumes:
+  postgres_data:

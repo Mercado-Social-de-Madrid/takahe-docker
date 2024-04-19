@@ -3,7 +3,7 @@ version: "0.1"
 services:
   web:
     container_name: web
-    image: jointakahe/takahe:0.10
+    image: jointakahe/takahe:0.11.0
     env_file: .env
     depends_on:
       - db
@@ -14,7 +14,7 @@ services:
       - ./media:/media
   worker:
     container_name: stator
-    image: jointakahe/takahe:0.10
+    image: jointakahe/takahe:0.11.0
     command: python3 manage.py runstator
     env_file: .env
     depends_on:
